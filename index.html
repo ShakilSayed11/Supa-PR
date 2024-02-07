@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Typing</title>
+</head>
+<body>
+    <textarea id="typingArea" rows="10" cols="50"></textarea>
+    <br>
+    <button onclick="startTyping()">Start</button>
+    <button onclick="stopTyping()">Stop</button>
+
+    <script>
+        let typingSpeed = 50; // Adjust typing speed (milliseconds per character)
+        let typingInterval;
+
+        function generateRandomSentence() {
+            const sentences = [
+                "Working on an important task.",
+                "Coding and debugging.",
+                "Creating innovative solutions.",
+                "Collaborating with the team.",
+                "Improving processes.",
+                "Contributing to success."
+            ];
+
+            const randomIndex = Math.floor(Math.random() * sentences.length);
+            return sentences[randomIndex];
+        }
+
+        function startTyping() {
+            typingInterval = setInterval(function() {
+                const randomSentence = generateRandomSentence();
+                document.getElementById('typingArea').value += randomSentence + '\n';
+                document.getElementById('typingArea').scrollTop = document.getElementById('typingArea').scrollHeight;
+            }, typingSpeed);
+        }
+
+        function stopTyping() {
+            clearInterval(typingInterval);
+        }
+    </script>
+</body>
+</html>
