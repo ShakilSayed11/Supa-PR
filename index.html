@@ -3,43 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Typing</title>
+    <title>Dynamic Auto Typing Script</title>
 </head>
 <body>
-    <textarea id="typingArea" rows="10" cols="50"></textarea>
-    <br>
-    <button onclick="startTyping()">Start</button>
-    <button onclick="stopTyping()">Stop</button>
 
-    <script>
-        let typingSpeed = 50; // Adjust typing speed (milliseconds per character)
-        let typingInterval;
+<textarea id="typingArea" rows="10" cols="50"></textarea>
 
-        function generateRandomSentence() {
-            const sentences = [
-                "Working on an important task.",
-                "Coding and debugging.",
-                "Creating innovative solutions.",
-                "Collaborating with the team.",
-                "Improving processes.",
-                "Contributing to success."
-            ];
+<script>
+let textToType = ""; // Initial empty text
+const typingSpeed = 100; // Adjust the speed (in milliseconds) at which characters are typed
 
-            const randomIndex = Math.floor(Math.random() * sentences.length);
-            return sentences[randomIndex];
+const typingArea = document.getElementById("typingArea");
+let index = 0;
+let typingInterval;
+
+function typeText() {
+    typingInterval = setInterval(function() {
+        typingArea.value += textToType[index];
+        index++;
+
+        // Restart typing if the end of the text is reached
+        if (index === textToType.length) {
+            index = 0;
+            typingArea.value = "";
         }
+    }, typingSpeed);
+}
 
-        function startTyping() {
-            typingInterval = setInterval(function() {
-                const randomSentence = generateRandomSentence();
-                document.getElementById('typingArea').value += randomSentence + '\n';
-                document.getElementById('typingArea').scrollTop = document.getElementById('typingArea').scrollHeight;
-            }, typingSpeed);
-        }
+function stopTyping() {
+    clearInterval(typingInterval);
+}
 
-        function stopTyping() {
-            clearInterval(typingInterval);
-        }
-    </script>
+// Start typing when the page loads
+window.onload = typeText;
+
+// Listen for keyboard input to dynamically update textToType
+document.addEventListener('keydown', function(event) {
+    // Append the pressed key to the textToType variable
+    textToType += event.key;
+});
+
+// Stop typing on pressing the 'Esc' key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        stopTyping();
+    }
+});
+</script>
+
 </body>
 </html>
