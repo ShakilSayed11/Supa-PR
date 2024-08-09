@@ -1,108 +1,571 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <base target="_top">
+    <!-- Add Bootstrap CSS for styling -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #EAE6E5;
+            color: #333;
+            font-family: 'Roboto', sans-serif;
+            padding-bottom: 30px;
         }
 
-        #login-container {
-            max-width: 400px;
-            margin: auto;
+        .container {
+            max-width: 680px;
             padding: 20px;
-            background-color: #fff;
-            margin-top: 100px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 0;
         }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
+        h2 {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        button {
+        .form-group {
             width: 100%;
-            padding: 10px;
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 0;
+            font-weight: bold;
+        }
+
+        .form-control,
+        .custom-select {
+            width: 100%;
+            background: #fff;
+            border: 1px solid #d7d7d7;
+            color: #333;
+            border-radius: 5px;
+            box-shadow: none;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .custom-select:focus {
+            border-color: #247ba0;
+        }
+
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        .btn-primary-custom {
+            display: block;
+            margin: auto;
+            width: 150px;
+            text-align: center;
+            align-items: center;
+            appearance: none;
+            background-color: #FCFCFD;
             border-radius: 4px;
+            border-width: 0;
+            box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+            box-sizing: border-box;
+            color: #36395A;
             cursor: pointer;
+            font-family: "JetBrains Mono", monospace;
+            height: 48px;
+            justify-content: center;
+            line-height: 1;
+            list-style: none;
+            overflow: hidden;
+            padding-left: 16px;
+            padding-right: 16px;
+            position: relative;
+            text-decoration: none;
+            transition: box-shadow .15s, transform .15s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+            will-change: box-shadow, transform;
+            font-size: 18px;
         }
 
-        button:hover {
-            background-color: #45a049;
+        .btn-primary-custom:focus {
+            box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
         }
+
+        .btn-primary-custom:hover {
+            box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary-custom:active {
+            box-shadow: #D6D6E7 0 3px 7px inset;
+            transform: translateY(2px);
+        }
+
+        /* Disabled Styles */
+        .btn-primary-custom:disabled {
+            background-color: #E0E0E0; /* Light grey */
+            opacity: 0.5; /* Reduced opacity */
+            cursor: not-allowed; /* Change cursor to indicate button is disabled */
+            pointer-events: none; /* Disable pointer events */
+        }
+
+        .hidden {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
-    <div id="login-container">
-        <h2>Login</h2>
-        <form id="login-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" required>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" required>
+<div class="container mt-5">
+    <h2>Productivity Submission Form</h2>
+    <!-- Form Begins Here -->
+    <form id="myForm" class="needs-validation" novalidate>
 
-            <button type="button" onclick="login()">Login</button>
-        </form>
+        <!-- Agent Name -->
+        <div class="form-group">
+            <label for="agentName">Agent Name</label>
+            <select class="form-control" id="agentName" name="agentName" required>
+                <option value="">Select Agent</option>
+                <option value="Sahil Sanadi">Sahil Sanadi</option>
+                <option value="Nikhil Singh">Nikhil Singh</option>
+                <option value="Junaid Qazi">Junaid Qazi</option>
+                <option value="Irfan Qureshi">Irfan Qureshi</option>
+                <option value="Shruti Nambiar">Shruti Nambiar</option>
+                <option value="Amreen shaikh">Amreen shaikh</option>
+                <option value="Nasim Rahamathulla">Nasim Rahamathulla</option>
+                <option value="Megha Parit">Megha Parit</option>
+                <option value="Bhushan Kisan">Bhushan Kisan</option>
+                <option value="Asra Peerzada">Asra Peerzada</option>
+                <option value="Gaurav Raghani">Gaurav Raghani</option>
+                <!-- Add other agents here -->
+            </select>
+        </div>
+
+        <!-- Working Department -->
+        <div class="form-group">
+            <label for="department">Working Department</label>
+            <select class="form-control" id="department" name="department" required>
+                <option value="">Select Department</option>
+                <option value="Pathways">Pathways</option>
+                <option value="Oxford Direct">Oxford Direct</option>
+                <!-- Add other departments here -->
+            </select>
+        </div>
+
+        <!-- Working Region -->
+        <div class="form-group">
+            <label for="region">Working Region</label>
+            <select class="form-control" id="region" name="region" required>
+                <option value="INDIA">INDIA</option>
+                <option value="DMUIC">DMUIC</option>
+                <option value="ENUIC">ENUIC</option>
+                <option value="ICD">ICD</option>
+                <option value="BUIC">BUIC</option>
+                <option value="UBIC">UBIC</option>
+                <option value="UGIC">UGIC</option>
+                <option value="OPIC">OPIC</option>
+                <option value="UKIC">UKIC</option>
+                <option value="North America">North America</option>
+                <option value="Cas Team">Cas Team</option>
+                <option value="Interview ">Interview </option>
+                <option value="Credit Control">Credit Control</option>
+                <option value="Pre-Arrival">Pre-Arrival</option>
+                <option value="Student Support Co-Ordinators">Student Support Co-Ordinators</option>
+                <option value="RAVENSBOURNE - India">RAVENSBOURNE - India</option>
+                <option value="RAVENSBOURNE - South Asia">RAVENSBOURNE - South Asia</option>
+                <option value="RAVENSBOURNE - Mena">RAVENSBOURNE - Mena</option>
+                <option value="RAVENSBOURNE - Cas">RAVENSBOURNE - Cas</option>
+                <option value="BPP Team">BPP Team</option>
+                <option value="Notre Dame">Notre Dame</option>
+                <option value="Birkbeck">Birkbeck</option>
+                <option value="UNDA">UNDA</option>
+                <!-- Add other regions here -->
+            </select>
+        </div>
+
+        <!-- Ticket Number -->
+        <div class="form-group">
+            <label for="ticketNumber">Ticket Number</label>
+            <input type="number" class="form-control" id="ticketNumber" name="ticketNumber" required>
+        </div>
+
+        <!-- Task Date -->
+        <div class="form-group">
+            <label for="taskDate">Task Date</label>
+            <input type="date" class="form-control" id="taskDate" name="taskDate" readonly>
+        </div>
+
+        <!-- Email Time -->
+        <div class="form-group">
+            <label for="emailTime">Email Time</label>
+            <input type="time" class="form-control" id="emailTime" name="emailTime" required>
+        </div>
+
+        <!-- Task and Time -->
+        <div class="form-group">
+            <label for="taskTime">Task</label>
+            <select class="form-control" id="taskTime" name="taskTime" onchange="handleTaskChange()">
+                <option value="IQ Filling|0:10">IQ Filling - 0:10</option>
+                <option value="Conditional offer letter|0:25">Conditional offer letter - 0:25</option>
+                <option value="Reject Application|0:15">Reject Application - 0:15</option>
+                <option value="Course confirmation / Refusal copy request|0:10">Course confirmation / Refusal copy request - 0:10</option>
+                <option value="Case Assessments / Change of course emails|0:15">Case Assessments / Change of course emails - 0:15</option>
+                <option value="Change of agent|0:10">Change of agent - 0:10</option>
+                <option value="Deferral Request|0:20">Deferral Request - 0:20</option>
+                <option value="UO/CAS Incomplete stage|0:15">UO/CAS Incomplete stage - 0:15</option>
+                <option value="Detailed Email reply|0:10">Detailed Email reply - 0:10</option>
+                <option value="Interview Schedule Request/Confirmation|0:07">Interview Schedule Request/Confirmation - 0:07</option>
+                <option value="UO Request (Complete) DMUIC/ UBIC / OIPC / SFSU / ICD|0:25">UO Request (Complete) DMUIC/ UBIC / OIPC / SFSU / ICD - 0:25</option>
+                <option value="UO Request (Complete) BUIC / UGIC|0:25">UO Request (Complete) BUIC / UGIC - 0:30</option>
+                <option value="CAS Request Incomplete|0:15">CAS Request Incomplete - 0:15</option>
+                <option value="CAS Request complete|0:30">CAS Request complete - 0:30</option>
+                <option value="Deferred UO Request|0:20">Deferred UO Request - 0:20</option>
+                <option value="Issuing UO Letter|0:10">Issuing UO Letter - 0:10</option>
+                <option value="Review CAS letter|0:10">Review CAS letter - 0:10</option>
+                <option value="Save Visa Copy|0:05">Save Visa Copy - 0:05</option>
+                <option value="Credibility interview|0:45">Credibility interview - 0:45</option>
+                <option value="Introductory call|0:10">Introductory call - 0:10</option>
+                <option value="Introductory call (NR contacts)|0:02">Introductory call (NR contacts) - 0:02</option>
+                <option value="Offer/mails Review |0:10">Offer/mails Review - 0:10</option>
+                <option value="UO/CAS Review |0:15">UO/CAS Review - 0:15</option>
+                <option value="Onshore Apps/Emails|0:03">Onshore Apps/Emails - 0:03</option>
+                <option value="Team Call|0:30">Team Call - 0:30</option>
+                <option value="Interview Review|0:25">Interview Review - 0:25</option>
+                <option value="BPP SOP Review|0:25">BPP SOP Review - 0:25</option>
+                <option value="Unsuccessful Interview|0:15">Unsuccessful Interview - 0:15</option>
+                <option value="Mercy GPA Checks|0:20">Mercy GPA Checks - 0:20</option>
+                <option value="Pal Sop|0:25">Pal Sop - 0:25</option>
+                <option value="Pal Completed|0:20">Pal Completed - 0:20</option>
+                <option value="Pending document|0:15">Pending document - 0:15</option>
+                <option value="Training By Trainer">Training By Trainer</option>
+                <option value="Task assigned by TL / Manager">Task assigned by TL / Manager</option>
+                <option value="Test Entry do not use it">Test Entry do not use it</option>
+            </select>
+        </div>
+
+        <!-- Task Details for Training By Trainer and Task assigned by TL / Manager -->
+        <div id="TrainingTaskDetails" class="hidden">
+            <div class="form-group">
+                <label for="TrainingTaskTime">Time Taken (Hour's/Min's only)</label>
+                <input type="text" class="form-control" id="TrainingTaskTime" name="TrainingTaskTime" placeholder="HH:MM" oninput="enforceFormat(this)" maxlength="5" required>
+            </div>
+        </div>
+
+        <!-- Additional Task Details for Task assigned by TL / Manager -->
+        <div id="TaskDetails" class="hidden">
+            <div class="form-group">
+                <label for="taskDetailsInput">Task Details</label>
+                <input type="text" class="form-control" id="taskDetailsInput" name="taskDetailsInput" placeholder="Enter task details" required>
+            </div>
+        </div>
+
+        <!-- Hidden fields to store location data -->
+        <input type="hidden" id="locationName" name="locationName">
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+
+        <input type="hidden" id="submissionTime" name="submissionTime">
+        <!-- Submit Button -->
+        <button id="submitButton" class="btn-primary-custom" type="submit" onclick="handleSubmit(event)">Submit</button>
+    </form>
+    <!-- Form Ends Here -->
+
+    <!-- Modal -->
+    <div class="modal" id="submissionModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Success</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Form submitted successfully!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Bootstrap Modal for Validation Messages -->
+    <div class="modal fade" id="validationModal" tabindex="-1" role="dialog" aria-labelledby="validationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="validationModalLabel">Form Submission Alert</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Please ensure all required fields are filled out correctly before submitting the form. Check the information provided and try again.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and its dependencies below, if you haven't already -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
-        // List of allowed users (for demonstration purposes)
-        const allowedUsers = {
-            'user1': 'password123',
-            'user2': 'abc123',
-            // Add more users as needed
-        };
+        // Set the current date in the Task Date field
+        document.getElementById('taskDate').valueAsDate = new Date();
 
-        function login() {
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
+        function handleTaskChange() {
+            var selectedTask = document.getElementById('taskTime').value;
 
-            // Check if the entered username and password are valid
-            if (allowedUsers.hasOwnProperty(username) && allowedUsers[username] === password) {
-                var empName = 'John Doe';
-                var loginDateTime = new Date().toLocaleString();
+            var trainingDetails = document.getElementById('TrainingTaskDetails');
+            var taskDetails = document.getElementById('TaskDetails');
 
-                var sheetId = '18Wr1xYykEYqve2LI-qXPOcRfB26OW_JDG_5isYxqrNI';
-                var sheetName = 'Sheet1';
-                var apiKey = 'AIzaSyAWVybWDvIA9Xiic2z3uoat4V1ymFshW7s';
-
-                var url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?valueInputOption=RAW&key=${apiKey}`;
-
-                var data = {
-                    values: [[empName, loginDateTime, '', 'LoggedIn']]
-                };
-
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-
-                alert('Login successful!');
+            if (selectedTask === "Training By Trainer") {
+                trainingDetails.classList.remove('hidden');
+                taskDetails.classList.add('hidden');
+            } else if (selectedTask === "Task assigned by TL / Manager") {
+                trainingDetails.classList.remove('hidden');
+                taskDetails.classList.remove('hidden');
             } else {
-                alert('Invalid username or password');
+                trainingDetails.classList.add('hidden');
+                taskDetails.classList.add('hidden');
             }
         }
+
+        function isElementVisible(el) {
+            return el.offsetParent !== null;
+        }
+
+        function validateTimeTaken(input) {
+            var value = input.value.trim();
+            var isValid = /^\d{2}:\d{2}$/.test(value);
+            if (!isValid) {
+                input.setCustomValidity('Time must be in HH:MM format');
+            } else {
+                input.setCustomValidity('');
+            }
+            return isValid;
+        }
+
+        function showModal(title, message) {
+            document.querySelector('#validationModal .modal-title').textContent = title;
+            document.querySelector('#validationModal .modal-body').textContent = message;
+
+            // Show the modal using jQuery
+            $('#validationModal').modal('show');
+        }
+
+        function isFormValid() {
+            var inputs = document.querySelectorAll('input, select');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].hasAttribute('required') && isElementVisible(inputs[i])) {
+                    if (!inputs[i].value.trim()) {
+                        // If validation fails, show the modal with a custom message
+                        showModal('Form Submission Alert', 'Please ensure all required fields are filled out correctly before submitting the form. Check the information provided and try again.');
+                        return false;
+                    }
+                }
+            }
+            // Check time format validity only if the time field is visible and has input
+            var timeInput = document.getElementById('TrainingTaskTime');
+            if (isElementVisible(timeInput) && !validateTimeTaken(timeInput)) {
+                // If time format is not valid, show error message
+                showModal('Form Submission Alert', 'Time must be in HH:MM format.');
+                return false;
+            }
+            return true;
+        }
+
+        // Initialize Supabase client
+        const { createClient } = supabase
+        const supabaseClient = createClient('https://dwcbvbpwkfmydeucsydj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Y2J2YnB3a2ZteWRldWNzeWRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NTQ2NTMsImV4cCI6MjAzODQzMDY1M30.g688zmPnGmwu9oBt7YrfUmtivDohDyiEYPQP-lz16GI')
+
+        async function getLocation() {
+        return new Promise((resolve, reject) => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    document.getElementById('latitude').value = latitude;
+                    document.getElementById('longitude').value = longitude;
+
+                    // Reverse geocode using Nominatim (OpenStreetMap)
+                    try {
+                        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+                        const data = await response.json();
+
+                        if (data && data.display_name) {
+                            document.getElementById('locationName').value = data.display_name;
+                            resolve(true);
+                        } else {
+                            reject('Unable to retrieve location name');
+                        }
+                    } catch (error) {
+                        reject('Error retrieving location name');
+                    }
+                }, (error) => {
+                    reject('Unable to retrieve your location');
+                });
+            } else {
+                reject('Geolocation is not supported by this browser.');
+            }
+        });
+    }
+
+    async function handleSubmit(event) {
+    event.preventDefault();
+
+    if (!isFormValid()) {
+        return;
+    }
+
+    // Disable submit button to prevent multiple submissions
+    document.getElementById('submitButton').disabled = true;
+
+    try {
+        // Get location before proceeding
+        await getLocation();
+
+        const form = document.getElementById('myForm');
+        document.getElementById('submissionTime').value = new Date().toLocaleTimeString();
+        const taskTime = form.taskTime.value.includes('|') ? form.taskTime.value.split('|')[1] : '';
+        const TrainingTaskTime = document.getElementById('TrainingTaskTime').value;
+        const timeTaken = taskTime || TrainingTaskTime;
+        const taskDetailsInput = form.taskDetailsInput && form.taskDetailsInput.value;
+        let taskDescription = form.taskTime.value.includes('|') ? form.taskTime.value.split('|')[0] : form.taskTime.value;
+
+        if (taskDescription === "Task assigned by TL / Manager" && taskDetailsInput) {
+            taskDescription += " - " + taskDetailsInput;
+        }
+
+        const latitude = form.latitude.value ? parseFloat(form.latitude.value) : null;
+        const longitude = form.longitude.value ? parseFloat(form.longitude.value) : null;
+
+        const formData = {
+            agent_name: form.agentName.value,
+            working_department: form.department.value,
+            working_region: form.region.value,
+            ticket_number: form.ticketNumber.value,
+            task_date: form.taskDate.value,
+            email_time: form.emailTime.value,
+            task_name: taskDescription,
+            task_time: timeTaken,
+            submission_time: form.submissionTime.value,
+            location_name: form.locationName.value || null,
+            latitude: latitude,
+            longitude: longitude
+        };
+
+        let { error } = await supabaseClient
+            .from('productivity')
+            .insert([formData]);
+
+        if (error) throw error;
+
+        $('#submissionModal').modal('show');
+        form.reset();
+        document.getElementById('taskDate').valueAsDate = new Date();
+        document.getElementById('TrainingTaskDetails').classList.add('hidden');
+        document.getElementById('TaskDetails').classList.add('hidden');
+        document.getElementById('region').value = "";
+
+    } catch (error) {
+        console.error('Error submitting form:', error);  // Log the entire error object
+        alert('Error submitting form: ' + error.message); // Display a more detailed error message to the user
+    } finally {
+        document.getElementById('submitButton').disabled = false;
+    }
+}
+
+
+        function enforceFormat(input) {
+            // Get the current value of the input
+            var value = input.value;
+            // Remove any characters that are not digits or colon
+            value = value.replace(/[^0-9:]/g, '');
+            // If there's more than 2 digits before the colon, remove the extra digits
+            var parts = value.split(':');
+            if (parts[0] && parts[0].length > 2) {
+                parts[0] = parts[0].substring(0, 2);
+            }
+            if (parts[1] && parts[1].length > 2) {
+                parts[1] = parts[1].substring(0, 2);
+            }
+            input.value = parts.join(':').substring(0, 5);
+
+            // If the value matches the format, clear the custom validity message
+            if (/^\d{2}:\d{2}$/.test(input.value)) {
+                input.setCustomValidity('');
+            } else {
+                input.setCustomValidity('Time must be in HH:MM format');
+            }
+        }
+
+        // Listen for when the user leaves the input field to check if it's valid
+        document.getElementById('TrainingTaskTime').addEventListener('blur', function (event) {
+            validateTimeTaken(event.target);
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var departmentSelect = document.getElementById('department');
+            var regionSelect = document.getElementById('region');
+
+            function updateRegionOptions() {
+                var department = departmentSelect.value;
+                var regionsForDepartment = {
+                    'Oxford Direct': ['RAVENSBOURNE - India', 'RAVENSBOURNE - South Asia', 'RAVENSBOURNE - Mena', 'RAVENSBOURNE - Cas', 'BPP Team', 'Interview', 'Notre Dame', 'Test Entry do not use it', 'UNDA', 'Birkbeck'],
+                    'Pathways': ['India', 'DMUIC', 'ENUIC', 'ICD', 'BUIC', 'UBIC', 'UGIC', 'OPIC', 'UKIC', 'North America', 'Cas Team', 'Interview', 'Credit Control', 'Pre-Arrival', 'Student Support Co-Ordinators']
+                };
+
+                // Clear existing options
+                regionSelect.innerHTML = '';
+
+                // Add new options
+                if (regionsForDepartment[department]) {
+                    regionsForDepartment[department].forEach(function (region) {
+                        var option = document.createElement('option');
+                        option.value = region;
+                        option.textContent = region;
+                        regionSelect.appendChild(option);
+                    });
+                }
+            }
+
+            // Event listener for department change
+            departmentSelect.addEventListener('change', updateRegionOptions);
+
+            // Initialize with the correct options on page load
+            updateRegionOptions();
+        });
+
+        // Attach the handleSubmit function to the form's submit event
+        document.getElementById('myForm').addEventListener('submit', handleSubmit);
     </script>
 </body>
 </html>
