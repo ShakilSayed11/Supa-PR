@@ -541,7 +541,7 @@ document.addEventListener('DOMContentLoaded', function () {
             location_name: form.locationName.value || null,
             latitude: latitude,
             longitude: longitude,
-            device_type: deviceType
+            device_type: document.getElementById('deviceType').value
         };
 
         let { error } = await supabaseClient
