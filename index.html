@@ -293,6 +293,7 @@
         <input type="hidden" id="submissionTime" name="submissionTime">
         <!-- Submit Button -->
         <button id="submitButton" class="btn-primary-custom" type="submit" onclick="handleSubmit(event)">Submit</button>
+<input type="hidden" id="deviceType" name="deviceType">
     </form>
     <!-- Form Ends Here -->
 
@@ -539,7 +540,8 @@ document.addEventListener('DOMContentLoaded', function () {
             submission_time: form.submissionTime.value,
             location_name: form.locationName.value || null,
             latitude: latitude,
-            longitude: longitude
+            longitude: longitude,
+            device_type: deviceType
         };
 
         let { error } = await supabaseClient
@@ -626,6 +628,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Attach the handleSubmit function to the form's submit event
         document.getElementById('myForm').addEventListener('submit', handleSubmit);
+
+function getDeviceType() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+        return "Android";
+    }
+
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+    }
+
+    if (/windows/i.test(userAgent)) {
+        return "Windows";
+    }
+
+    if (/mac/i.test(userAgent)) {
+        return "Mac";
+    }
+
+    if (/linux/i.test(userAgent)) {
+        return "Linux";
+    }
+
+    return "Unknown";
+}
+
+// Set the device type before form submission
+document.getElementById('myForm').addEventListener('submit', function(event) {
+    const deviceType = getDeviceType();
+    document.getElementById('deviceType').value = deviceType;
+});
     </script>
 </body>
 </html>
