@@ -540,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         let { error } = await supabaseClient
-            .from('productivity')
+            .from('productivity1')
             .insert([formData]);
 
         if (error) throw error;
