@@ -565,6 +565,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 }
 
+function getDeviceType() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+        return "Android";
+    }
+
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+    }
+
+    if (/windows/i.test(userAgent)) {
+        return "Windows";
+    }
+
+    if (/mac/i.test(userAgent)) {
+        return "Mac";
+    }
+
+    if (/linux/i.test(userAgent)) {
+        return "Linux";
+    }
+
+    return "Unknown";
+}
+
+document.getElementById('myForm').addEventListener('submit', function(event) {
+    const deviceType = getDeviceType();
+    document.getElementById('deviceType').value = deviceType;
+    console.log('Device Type:', deviceType); // For debugging
+});
 
         function enforceFormat(input) {
             // Get the current value of the input
@@ -628,38 +659,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Attach the handleSubmit function to the form's submit event
         document.getElementById('myForm').addEventListener('submit', handleSubmit);
-
-function getDeviceType() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-    if (/android/i.test(userAgent)) {
-        return "Android";
-    }
-
-    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        return "iOS";
-    }
-
-    if (/windows/i.test(userAgent)) {
-        return "Windows";
-    }
-
-    if (/mac/i.test(userAgent)) {
-        return "Mac";
-    }
-
-    if (/linux/i.test(userAgent)) {
-        return "Linux";
-    }
-
-    return "Unknown";
-}
-
-// Set the device type before form submission
-document.getElementById('myForm').addEventListener('submit', function(event) {
-    const deviceType = getDeviceType();
-    document.getElementById('deviceType').value = deviceType;
-});
     </script>
 </body>
 </html>
