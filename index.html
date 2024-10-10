@@ -538,10 +538,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Event listener for department change
-    departmentSelect.addEventListener('change', updateRegionOptions);
-
+    departmentSelect.addEventListener('change', function() {
+        updateRegionOptions();
+        updateTaskOptions();
+    });
+    
     // Initialize with the correct options on page load
     updateRegionOptions();
+    updateTaskOptions();
 
     // Set the device type when the page loads
     setDeviceType();
@@ -550,6 +554,35 @@ document.addEventListener('DOMContentLoaded', function () {
 function isMicrosoftEdge() {
     const userAgent = window.navigator.userAgent;
     return userAgent.includes("Edg");
+}
+
+function updateTaskOptions() {
+    var department = document.getElementById('department').value;
+    var taskSelect = document.getElementById('taskTime');
+    var originalOptions = taskSelect.innerHTML;
+
+    if (department === 'Conversions') {
+        taskSelect.innerHTML = `
+            <option value="Introductory Call|0:20">Introductory Call - 0:20</option>
+            <option value="Credibility Mock Interview|0:40">Credibility Mock Interview - 0:40</option>
+            <option value="Document Chase up|0:10">Document Chase up - 0:10</option>
+            <option value="Persona|0:15">Persona - 0:15</option>
+            <option value="Spotlight Test|0:10">Spotlight Test - 0:10</option>
+            <option value="Introductory Scheduling|0:10">Introductory Scheduling - 0:10</option>
+            <option value="Mock Scheduling|0:10">Mock Scheduling - 0:10</option>
+            <option value="Webinar Invitees|0:30">Webinar Invitees - 0:30</option>
+            <option value="Introductory Feedback|0:05">Introductory Feedback - 0:05</option>
+            <option value="Mock Feedback|0:10">Mock Feedback - 0:10</option>
+            <option value="Mock calling|0:05">Mock calling - 0:05</option>
+            <option value="Pre-arrival calls|0:05">Pre-arrival calls - 0:05</option>
+            <option value="Online registration|0:10">Online registration - 0:10</option>
+            <option value="Misc|0:01">Misc - 0:01</option>
+            <option value="Training By Trainer">Training By Trainer</option>
+            <option value="Task assigned by TL / Manager">Task assigned by TL / Manager</option>
+        `;
+    } else {
+        taskSelect.innerHTML = originalOptions;
+    }
 }
 
 function enforceEdgeBrowser() {
