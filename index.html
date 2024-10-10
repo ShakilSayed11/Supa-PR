@@ -385,7 +385,8 @@
         <!-- Task and Time -->
         <div class="form-group">
             <label for="taskTime">Task</label>
-            <select class="form-control" id="taskTime" name="taskTime" onchange="handleTaskChange()">
+            <select class="form-control" id="taskTime" name="taskTime" onchange="handleTaskChange()" required>
+                <option value="" disabled selected>Please select task</option>
                 <option value="IQ Filling|0:10">IQ Filling - 0:10</option>
                 <option value="Conditional offer letter|0:25">Conditional offer letter - 0:25</option>
                 <option value="Reject Application|0:15">Reject Application - 0:15</option>
@@ -561,36 +562,82 @@ function updateTaskOptions() {
     var taskSelect = document.getElementById('taskTime');
     var options = taskSelect.options;
 
-    for (var i = 0; i < options.length; i++) {
-        var option = options[i];
-        var isConversionTask = [
-            "Introductory Call|0:20",
-            "Credibility Mock Interview|0:40",
-            "Document Chase up|0:10",
-            "Persona|0:15",
-            "Spotlight Test|0:10",
-            "Introductory Scheduling|0:10",
-            "Mock Scheduling|0:10",
-            "Webinar Invitees|0:30",
-            "Introductory Feedback|0:05",
-            "Mock Feedback|0:10",
-            "Mock calling|0:05",
-            "Pre-arrival calls|0:05",
-            "Online registration|0:10",
-            "Misc|0:01"
-        ].includes(option.value);
+    var conversionTasks = [
+        "Introductory Call|0:20",
+        "Credibility Mock Interview|0:40",
+        "Document Chase up|0:10",
+        "Persona|0:15",
+        "Spotlight Test|0:10",
+        "Introductory Scheduling|0:10",
+        "Mock Scheduling|0:10",
+        "Webinar Invitees|0:30",
+        "Introductory Feedback|0:05",
+        "Mock Feedback|0:10",
+        "Mock calling|0:05",
+        "Pre-arrival calls|0:05",
+        "Online registration|0:10",
+        "Misc|0:01"
+    ];
 
+    var generalTasks = [
+        "IQ Filling|0:10",
+        "Conditional offer letter|0:25",
+        "Reject Application|0:15",
+        "Course confirmation / Refusal copy request|0:10",
+        "Case Assessments / Change of course emails|0:15",
+        "Change of agent|0:10",
+        "Deferral Request|0:20",
+        "UO/CAS Incomplete stage|0:15",
+        "Detailed Email reply|0:10",
+        "Interview Schedule Request/Confirmation|0:07",
+        "UO Request (Complete) DMUIC/ UBIC / OIPC / SFSU / ICD|0:25",
+        "UO Request (Complete) BUIC / UGIC|0:25",
+        "CAS Request Incomplete|0:15",
+        "CAS Request complete|0:30",
+        "Deferred UO Request|0:20",
+        "Issuing UO Letter|0:10",
+        "Review CAS letter|0:10",
+        "Save Visa Copy|0:05",
+        "Credibility interview|0:45",
+        "Introductory call|0:10",
+        "Introductory call (NR contacts)|0:02",
+        "Offer/mails Review |0:10",
+        "UO/CAS Review |0:15",
+        "Onshore Apps/Emails|0:03",
+        "Team Call|0:30",
+        "Interview Review|0:25",
+        "BPP SOP Review|0:25",
+        "Unsuccessful Interview|0:15",
+        "Mercy GPA Checks|0:20",
+        "Pal Sop|0:25",
+        "Pal Completed|0:20",
+        "Pending document|0:15"
+    ];
+
+    var commonTasks = [
+        "Training By Trainer",
+        "Task assigned by TL / Manager",
+        "Test Entry do not use it"
+    ];
+
+    // Always show the default option
+    options[0].style.display = '';
+
+    for (var i = 1; i < options.length; i++) {
+        var option = options[i];
         if (department === 'Conversions') {
-            option.style.display = isConversionTask || option.value === "Training By Trainer" || option.value === "Task assigned by TL / Manager" ? '' : 'none';
+            option.style.display = conversionTasks.includes(option.value) || commonTasks.includes(option.value) ? '' : 'none';
+        } else if (department === 'Pathways' || department === 'Oxford Direct') {
+            option.style.display = generalTasks.includes(option.value) || commonTasks.includes(option.value) ? '' : 'none';
         } else {
-            option.style.display = '';
+            option.style.display = ''; // Show all options if no specific department is selected
         }
     }
 
-    // Reset the selected option
+    // Reset the selected option to the default "Please select task"
     taskSelect.selectedIndex = 0;
 }
-
+        
 function enforceEdgeBrowser() {
     if (!isMicrosoftEdge()) {
         const modal = document.createElement('div');
@@ -762,6 +809,12 @@ async function handleSubmit(event) {
 
     if (!isFormValid()) {
         return;
+    }
+
+    const taskSelect = document.getElementById('taskTime');
+        if (taskSelect.selectedIndex === 0) {
+            showModal('Form Submission Alert', 'Please select a task before submitting the form.');
+            return;
     }
 
     document.getElementById('submitButton').disabled = true;
