@@ -512,6 +512,102 @@
 
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
+ // Define task lists for each department
+const taskLists = {
+    'Pathways': [
+        "IQ Filling|0:10",
+        "Conditional offer letter|0:25",
+        "Reject Application|0:15",
+        "Course confirmation / Refusal copy request|0:10",
+        "Case Assessments / Change of course emails|0:15",
+        "Change of agent|0:10",
+        "Deferral Request|0:20",
+        "UO/CAS Incomplete stage|0:15",
+        "Detailed Email reply|0:10",
+        "Interview Schedule Request/Confirmation|0:07",
+        "UO Request (Complete) DMUIC/ UBIC / OIPC / SFSU / ICD|0:25",
+        "UO Request (Complete) BUIC / UGIC|0:25",
+        "CAS Request Incomplete|0:15",
+        "CAS Request complete|0:30",
+        "Deferred UO Request|0:20",
+        "Issuing UO Letter|0:10",
+        "Review CAS letter|0:10",
+        "Save Visa Copy|0:05",
+        "Credibility interview|0:45",
+        "Introductory call|0:10",
+        "Introductory call (NR contacts)|0:02",
+        "Offer/mails Review |0:10",
+        "UO/CAS Review |0:15",
+        "Onshore Apps/Emails|0:03",
+        "Team Call|0:30",
+        "Interview Review|0:25",
+        "BPP SOP Review|0:25",
+        "Unsuccessful Interview|0:15",
+        "Mercy GPA Checks|0:20",
+        "Pal Sop|0:25",
+        "Pal Completed|0:20",
+        "Pending document|0:15",
+        "Training By Trainer",
+        "Task assigned by TL / Manager",
+        "Test Entry do not use it"
+    ],
+    'Conversions': [
+        "Introductory Call|0:20",
+        "Credibility Mock Interview|0:40",
+        "Document Chase up|0:10",
+        "Persona|0:15",
+        "Spotlight Test|0:10",
+        "Introductory Scheduling|0:10",
+        "Mock Scheduling|0:10",
+        "Webinar Invitees|0:30",
+        "Introductory Feedback|0:05",
+        "Mock Feedback|0:10",
+        "Mock calling|0:05",
+        "Pre-arrival calls|0:05",
+        "Online registration|0:10",
+        "Misc|0:01",
+        "Training By Trainer",
+        "Task assigned by TL / Manager"
+    ],
+    'Oxford Direct': [
+        "IQ Filling|0:10",
+        "Conditional offer letter|0:25",
+        "Reject Application|0:15",
+        "Course confirmation / Refusal copy request|0:10",
+        "Case Assessments / Change of course emails|0:15",
+        "Change of agent|0:10",
+        "Deferral Request|0:20",
+        "UO/CAS Incomplete stage|0:15",
+        "Detailed Email reply|0:10",
+        "Interview Schedule Request/Confirmation|0:07",
+        "UO Request (Complete) DMUIC/ UBIC / OIPC / SFSU / ICD|0:25",
+        "UO Request (Complete) BUIC / UGIC|0:25",
+        "CAS Request Incomplete|0:15",
+        "CAS Request complete|0:30",
+        "Deferred UO Request|0:20",
+        "Issuing UO Letter|0:10",
+        "Review CAS letter|0:10",
+        "Save Visa Copy|0:05",
+        "Credibility interview|0:45",
+        "Introductory call|0:10",
+        "Introductory call (NR contacts)|0:02",
+        "Offer/mails Review |0:10",
+        "UO/CAS Review |0:15",
+        "Onshore Apps/Emails|0:03",
+        "Team Call|0:30",
+        "Interview Review|0:25",
+        "BPP SOP Review|0:25",
+        "Unsuccessful Interview|0:15",
+        "Mercy GPA Checks|0:20",
+        "Pal Sop|0:25",
+        "Pal Completed|0:20",
+        "Pending document|0:15",
+        "Training By Trainer",
+        "Task assigned by TL / Manager",
+        "Test Entry do not use it"
+    ]
+};
+
 document.addEventListener('DOMContentLoaded', function () {
     var departmentSelect = document.getElementById('department');
     var regionSelect = document.getElementById('region');
@@ -520,7 +616,8 @@ document.addEventListener('DOMContentLoaded', function () {
         var department = departmentSelect.value;
         var regionsForDepartment = {
             'Oxford Direct': ['RAVENSBOURNE - India', 'RAVENSBOURNE - South Asia', 'RAVENSBOURNE - Mena', 'RAVENSBOURNE - Cas', 'BPP Team', 'Interview', 'Test Entry do not use it', 'UNDA', 'UHE'],
-            'Pathways': ['India', 'DMUIC', 'ENUIC', 'ICD', 'BUIC', 'UBIC', 'UGIC', 'OPIC', 'UKIC', 'North America', 'Cas Team', 'Interview', 'Credit Control', 'Pre-Arrival', 'Student Support Co-Ordinators']
+            'Pathways': ['India', 'DMUIC', 'ENUIC', 'ICD', 'BUIC', 'UBIC', 'UGIC', 'OPIC', 'UKIC', 'North America', 'Cas Team', 'Interview', 'Credit Control', 'Pre-Arrival', 'Student Support Co-Ordinators'],
+            'Conversions': ['Conversions - OD','Conversions - Pathways']
         };
 
         // Clear existing options
@@ -538,13 +635,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Event listener for department change
-    departmentSelect.addEventListener('change', updateRegionOptions);
+    departmentSelect.addEventListener('change', function() {
+        updateRegionOptions();
+        updateTaskList();
+    });
 
     // Initialize with the correct options on page load
     updateRegionOptions();
+    updateTaskList();
 
     // Set the device type when the page loads
     setDeviceType();
+    
+    // Set the current date
+    document.getElementById('taskDate').valueAsDate = new Date();
+    
+    // Enforce Edge browser
+    enforceEdgeBrowser();
 });
 
 function isMicrosoftEdge() {
@@ -579,8 +686,8 @@ function enforceEdgeBrowser() {
         modalContent.innerHTML = `
             <h2>🚫 Oops! Wrong Browser Detected</h2>
             <p>Looks like you're trying to access this form from a browser that's not Microsoft Edge. We love all browsers, but this form has a special bond with Edge. 😉</p>
-            <p>Don't worry, you can easily join the party by <a href="https://www.microsoft.com/edge" target="_blank" style="color: #0078d7; text-decoration: none;">downloading Microsoft Edge</a>. It’s just a click away!</p>
-            <p>Come back with Edge, and we’ll be all set to go! 😊</p>
+            <p>Don't worry, you can easily join the party by <a href="https://www.microsoft.com/edge" target="_blank" style="color: #0078d7; text-decoration: none;">downloading Microsoft Edge</a>. It's just a click away!</p>
+            <p>Come back with Edge, and we'll be all set to go! 😊</p>
         `;
 
         modal.appendChild(modalContent);
@@ -589,10 +696,23 @@ function enforceEdgeBrowser() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    enforceEdgeBrowser();
-    document.getElementById('taskDate').valueAsDate = new Date();
-});
+function updateTaskList() {
+    const department = document.getElementById('department').value;
+    const taskSelect = document.getElementById('taskTime');
+    
+    // Clear existing options
+    taskSelect.innerHTML = '';
+    
+    // Add new options based on selected department
+    if (taskLists[department]) {
+        taskLists[department].forEach(task => {
+            const option = document.createElement('option');
+            option.value = task;
+            option.textContent = task.split('|')[0];
+            taskSelect.appendChild(option);
+        });
+    }
+}
 
 function handleTaskChange() {
     var selectedTask = document.getElementById('taskTime').value;
@@ -744,7 +864,7 @@ async function handleSubmit(event) {
 
         const latitude = form.latitude.value ? parseFloat(form.latitude.value) : null;
         const longitude = form.longitude.value ? parseFloat(form.longitude.value) : null;
-
+        
         const formData = {
             agent_name: form.agentName.value,
             working_department: form.department.value,
@@ -758,7 +878,7 @@ async function handleSubmit(event) {
             location_name: form.locationName.value || null,
             latitude: latitude,
             longitude: longitude,
-            device_type: document.getElementById('deviceType').value // Correct reference
+            device_type: document.getElementById('deviceType').value
         };
 
         let { error } = await supabaseClient
@@ -773,6 +893,7 @@ async function handleSubmit(event) {
         document.getElementById('TrainingTaskDetails').classList.add('hidden');
         document.getElementById('TaskDetails').classList.add('hidden');
         document.getElementById('region').value = "";
+        updateTaskList(); // Update task list after form reset
 
     } catch (error) {
         console.error('Error submitting form:', error);
@@ -807,6 +928,8 @@ document.getElementById('TrainingTaskTime').addEventListener('blur', function (e
     validateTimeTaken(event.target);
 });
 
+// Add event listener for task change
+document.getElementById('taskTime').addEventListener('change', handleTaskChange);
     </script>
 </body>
 </html>
