@@ -710,7 +710,7 @@ function enforceEdgeBrowser() {
 }
 
 function updateTaskList() {
-    const department = document.getElementById('department').value;
+    const department = document.getElementById('department').value || 'Pathways';
     const taskSelect = document.getElementById('taskTime');
     
     // Clear existing options
