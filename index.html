@@ -360,6 +360,8 @@
                 <option value="BPP Team">BPP Team</option>
                 <option value="Birkbeck">UHE</option>
                 <option value="UNDA">UNDA</option>
+                <option value="Conversions - OD">Conversions - OD</option>
+                <option value="Conversions - Pathways">Conversions - Pathways</option>
                 <!-- Add other regions here -->
             </select>
         </div>
@@ -519,7 +521,8 @@ document.addEventListener('DOMContentLoaded', function () {
         var department = departmentSelect.value;
         var regionsForDepartment = {
             'Oxford Direct': ['RAVENSBOURNE - India', 'RAVENSBOURNE - South Asia', 'RAVENSBOURNE - Mena', 'RAVENSBOURNE - Cas', 'BPP Team', 'Interview', 'Test Entry do not use it', 'UNDA', 'UHE'],
-            'Pathways': ['India', 'DMUIC', 'ENUIC', 'ICD', 'BUIC', 'UBIC', 'UGIC', 'OPIC', 'UKIC', 'North America', 'Cas Team', 'Interview', 'Credit Control', 'Pre-Arrival', 'Student Support Co-Ordinators']
+            'Pathways': ['India', 'DMUIC', 'ENUIC', 'ICD', 'BUIC', 'UBIC', 'UGIC', 'OPIC', 'UKIC', 'North America', 'Cas Team', 'Interview', 'Credit Control', 'Pre-Arrival', 'Student Support Co-Ordinators'],
+            'Conversions': ['Conversions - OD','Conversions - Pathways']
         };
 
         // Clear existing options
