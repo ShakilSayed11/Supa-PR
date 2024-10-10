@@ -30,7 +30,7 @@
         .container {
             width: 100%;
             max-width: 680px;
-            padding: 20px;
+            padding: 20px !important;
             background-color: #ffffff;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -53,7 +53,7 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 20px !important;
         }
 
         .form-control, .custom-select {
@@ -148,6 +148,14 @@
             display: none;
         }
 
+        .form-group, .form-control, .custom-select {
+            width: 100% !important;
+            max-width: none !important;
+        }
+
+        #taskTime {
+            min-width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -625,32 +633,47 @@ document.addEventListener('DOMContentLoaded', function () {
     var departmentSelect = document.getElementById('department');
     var regionSelect = document.getElementById('region');
 
-    function updateRegionOptions() {
-        var department = departmentSelect.value;
-        var regionsForDepartment = {
-            'Oxford Direct': ['RAVENSBOURNE - India', 'RAVENSBOURNE - South Asia', 'RAVENSBOURNE - Mena', 'RAVENSBOURNE - Cas', 'BPP Team', 'Interview', 'Test Entry do not use it', 'UNDA', 'UHE'],
-            'Pathways': ['India', 'DMUIC', 'ENUIC', 'ICD', 'BUIC', 'UBIC', 'UGIC', 'OPIC', 'UKIC', 'North America', 'Cas Team', 'Interview', 'Credit Control', 'Pre-Arrival', 'Student Support Co-Ordinators'],
-            'Conversions': ['Conversions - OD','Conversions - Pathways']
-        };
+function updateRegionOptions() {
+    var department = departmentSelect.value;
+    var regionsForDepartment = {
+        'Oxford Direct': ['RAVENSBOURNE - India', 'RAVENSBOURNE - South Asia', 'RAVENSBOURNE - Mena', 'RAVENSBOURNE - Cas', 'BPP Team', 'Interview', 'Test Entry do not use it', 'UNDA', 'UHE'],
+        'Pathways': ['India', 'DMUIC', 'ENUIC', 'ICD', 'BUIC', 'UBIC', 'UGIC', 'OPIC', 'UKIC', 'North America', 'Cas Team', 'Interview', 'Credit Control', 'Pre-Arrival', 'Student Support Co-Ordinators'],
+        'Conversions': ['Conversions - OD','Conversions - Pathways']
+    };
 
-        // Clear existing options
-        regionSelect.innerHTML = '';
+    // Store the original width
+    const originalWidth = regionSelect.offsetWidth;
 
-        // Add new options
-        if (regionsForDepartment[department]) {
-            regionsForDepartment[department].forEach(function (region) {
-                var option = document.createElement('option');
-                option.value = region;
-                option.textContent = region;
-                regionSelect.appendChild(option);
-            });
-        }
+    // Clear existing options
+    regionSelect.innerHTML = '';
+
+    // Add new options
+    if (regionsForDepartment[department]) {
+        regionsForDepartment[department].forEach(function (region) {
+            var option = document.createElement('option');
+            option.value = region;
+            option.textContent = region;
+            regionSelect.appendChild(option);
+        });
     }
+
+    // Force the select element to maintain its original width
+    regionSelect.style.width = originalWidth + 'px';
+}
+
+function resetFormLayout() {
+    const formElements = document.querySelectorAll('.form-control, .custom-select');
+    formElements.forEach(element => {
+        element.style.width = '100%';
+    });
+    document.body.offsetHeight; // Force layout recalculation
+}
 
     // Event listener for department change
     departmentSelect.addEventListener('change', function() {
         updateRegionOptions();
         updateTaskList();
+        resetFormLayout();
     });
 
     // Initialize with the correct options on page load
@@ -666,6 +689,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Enforce Edge browser
     enforceEdgeBrowser();
 });
+
+window.addEventListener('resize', resetFormLayout);
 
 function isMicrosoftEdge() {
     const userAgent = window.navigator.userAgent;
@@ -710,8 +735,11 @@ function enforceEdgeBrowser() {
 }
 
 function updateTaskList() {
-    const department = document.getElementById('department').value || 'Pathways';
+    const department = document.getElementById('department').value;
     const taskSelect = document.getElementById('taskTime');
+    
+    // Store the original width
+    const originalWidth = taskSelect.offsetWidth;
     
     // Clear existing options
     taskSelect.innerHTML = '';
@@ -725,6 +753,9 @@ function updateTaskList() {
             taskSelect.appendChild(option);
         });
     }
+    
+    // Force the select element to maintain its original width
+    taskSelect.style.width = originalWidth + 'px';
 }
 
 function handleTaskChange() {
