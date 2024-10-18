@@ -383,9 +383,8 @@
         <!-- Ticket Number -->
         <div class="form-group">
             <label for="ticketNumber">Ticket Number</label>
-            <input type="number" class="form-control" id="ticketNumber" name="ticketNumber" required>
+            <input type="text" class="form-control" id="ticketNumber" name="ticketNumber" maxlength="6" pattern="\d{1,6}" required>
         </div>
-
         <!-- Task Date -->
         <div class="form-group">
             <label for="taskDate">Task Date</label>
@@ -913,6 +912,23 @@ function enforceFormat(input) {
 
 document.getElementById('TrainingTaskTime').addEventListener('blur', function (event) {
     validateTimeTaken(event.target);
+});
+
+document.getElementById('ticketNumber').addEventListener('input', function(e) {
+    // Remove any non-digit characters
+    this.value = this.value.replace(/\D/g, '');
+    
+    // Limit to 6 digits
+    if (this.value.length > 6) {
+        this.value = this.value.slice(0, 6);
+    }
+});
+
+document.getElementById('ticketNumber').addEventListener('paste', function(e) {
+    e.preventDefault();
+    var pastedText = (e.clipboardData || window.clipboardData).getData('text');
+    pastedText = pastedText.replace(/\D/g, '').slice(0, 6);
+    this.value = pastedText;
 });
 
     </script>
